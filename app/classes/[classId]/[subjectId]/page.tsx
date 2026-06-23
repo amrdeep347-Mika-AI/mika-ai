@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { class6 } from "@/data/curriculum/class6";
 import { class6MathLessons } from "@/data/lessons/class6-math";
 import { motion } from "framer-motion";
-
 
 
 export default function LearnPage() {
@@ -12,7 +11,85 @@ export default function LearnPage() {
 
   const [selectedTopic, setSelectedTopic] =
     useState("Introduction");
+  const [completedTopics, setCompletedTopics] = useState<string[]>([]);
 
+  const [xp, setXp] = useState(0);
+  const [level, setLevel] = useState(1);
+
+  const [question, setQuestion] = useState("");
+const [answer, setAnswer] = useState(
+  "🤖 Hi! I'm Mika. Ask me anything."
+);
+const [loading, setLoading] = useState(false);
+
+useEffect(() => {
+  const saved = localStorage.getItem("mika-progress");
+
+  if (saved) {
+    setCompletedTopics(JSON.parse(saved));
+  }
+  const savedXP = localStorage.getItem("mika-xp");
+  const savedLevel = localStorage.getItem("mika-level");
+
+  if (savedXP) setXp(Number(savedXP));
+  if (savedLevel) setLevel(Number(savedLevel));
+}, []);
+const markTopicComplete = () => {
+  if (completedTopics.includes(selectedTopic)) return;
+
+  const updated = [...completedTopics, selectedTopic];
+
+  setCompletedTopics(updated);
+
+  localStorage.setItem(
+    "mika-progress",
+    JSON.stringify(updated)
+  );
+
+  const newXP = xp + 10;
+  setXp(newXP);
+
+  localStorage.setItem(
+    "mika-xp",
+    newXP.toString()
+  );
+
+  const newLevel = Math.floor(newXP / 100) + 1;
+
+  setLevel(newLevel);
+
+  localStorage.setItem(
+    "mika-level",
+    newLevel.toString()
+  );
+};
+const askMika = async () => {
+  if (!question.trim()) return;
+
+  setLoading(true);
+
+  try {
+    const response = await fetch("/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        question,
+      }),
+    });
+
+    const data = await response.json();
+
+    setAnswer(data.answer);
+  } catch {
+    setAnswer(
+      "Sorry, Mika is unavailable right now."
+    );
+  }
+
+  setLoading(false);
+};
   const topicKey = selectedTopic
     .toLowerCase()
     .replace(/\s+/g, "-");
@@ -75,29 +152,35 @@ export default function LearnPage() {
           ))}
 
         </div>
-          <div className="mt-10">
+
+<div className="mt-10">
 
   <h3 className="font-bold text-xl">
     💬 Ask Mika
   </h3>
 
   <textarea
+    value={question}
+    onChange={(e) => setQuestion(e.target.value)}
     placeholder="Ask Mika anything..."
     className="w-full mt-4 p-3 border rounded-xl"
     rows={4}
   />
 
   <button
+    onClick={askMika}
     className="w-full mt-3 bg-indigo-600 text-white p-3 rounded-xl font-bold"
   >
-    Ask Mika
+    {loading ? "Thinking..." : "Ask Mika"}
   </button>
 
-  <div className="mt-4 bg-slate-100 p-4 rounded-xl">
-    🤖 Hi! I'm Mika. Ask me about this topic.
+  <div className="mt-4 bg-slate-100 p-4 rounded-xl whitespace-pre-wrap">
+    {answer}
   </div>
 
 </div>
+
+
       </aside>
 
       {/* MAIN CONTENT */}
@@ -299,19 +382,102 @@ export default function LearnPage() {
             </button>
 
           </div>
+           <div className="mt-8 flex justify-end">
+
+          <button
+  onClick={markTopicComplete}
+  className="bg-green-600 text-white px-8 py-4 rounded-2xl font-bold"
+>
+  ✅ Mark Topic Complete
+</button>
+
+</div>
 
         </div>
 
       </section>
-            <div className="mt-8 flex justify-end">
+  
+<aside className="w-80 bg-white border-l p-6 overflow-y-auto">
 
-  <button
-    className="bg-green-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-green-700"
-  >
-    ✅ Mark Topic Complete
-  </button>
+  <h2 className="text-2xl font-black">
+    📈 Progress
+  </h2>
 
-</div>
+  <div className="mt-6">
+
+    <p className="font-bold">
+      Chapter Progress
+    </p>
+
+    <div className="w-full bg-slate-200 rounded-full h-4 mt-3">
+      <div
+        className="bg-indigo-600 h-4 rounded-full"
+        style={{
+          width: `${Math.min(
+            (completedTopics.length / 10) * 100,
+            100
+          )}%`,
+        }}
+      />
+    </div>
+
+    <p className="mt-2 text-slate-500">
+      {completedTopics.length} Topics Completed
+    </p>
+
+  </div>
+
+  <div className="mt-8 bg-yellow-100 p-4 rounded-xl">
+
+    <h3 className="font-bold">
+      ⭐ XP Points
+    </h3>
+
+    <p className="mt-2">
+      {xp} XP
+    </p>
+
+  </div>
+
+  <div className="mt-4 bg-indigo-100 p-4 rounded-xl">
+
+    <h3 className="font-bold">
+      🏆 Level
+    </h3>
+
+    <p className="mt-2">
+      Level {level}
+    </p>
+
+  </div>
+
+  <div className="mt-10">
+
+    <h3 className="font-bold text-xl">
+      🏆 Achievements
+    </h3>
+
+    <div className="mt-4 space-y-3">
+
+      <div className="bg-amber-100 p-4 rounded-xl">
+        🔥 3 Day Streak
+      </div>
+
+      <div className="bg-green-100 p-4 rounded-xl">
+        📘 First Chapter Started
+      </div>
+
+      <div className="bg-blue-100 p-4 rounded-xl">
+        🤖 Learned with Mika
+      </div>
+
+    </div>
+
+  </div>
+
+</aside>
+
+           
     </main>
   );
 }
