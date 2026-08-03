@@ -3,21 +3,39 @@ import { getLesson } from "@/lib/cache/lessonCache";
 
 export async function POST(request: NextRequest) {
   try {
-    const { className, subject, topic } = await request.json();
+    const {
+      className,
+      subject,
+      chapter,
+      topic,
+    } = await request.json();
 
-    if (!className || !subject || !topic) {
+    if (!className || !subject || !chapter || !topic) {
       return NextResponse.json(
         { error: "Missing required fields." },
         { status: 400 }
       );
     }
 
+    // Convert "class-1" -> 1
+    const classNumber = parseInt(
+      className.replace("class-", ""),
+      10
+    );
+
+    if (Number.isNaN(classNumber)) {
+      return NextResponse.json(
+        { error: "Invalid class." },
+        { status: 400 }
+      );
+    }
+
     const lesson = await getLesson({
-  classNumber: Number(className),
-  subject,
-  chapter,
-  topic,
-});
+      classNumber,
+      subject,
+      chapter,
+      topic,
+    });
 
     return NextResponse.json(lesson);
   } catch (error) {

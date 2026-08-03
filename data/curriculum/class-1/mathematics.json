@@ -1,0 +1,30 @@
+{
+  "subject": "Mathematics",
+  "slug": "mathematics",
+  "icon": "📐",
+  "chapters": [
+    {
+      "number": 1,
+      "name": "Shapes and Space",
+      "slug": "shapes-and-space",
+      "topics": [
+        "Identifying Shapes",
+        "Inside and Outside",
+        "Top and Bottom",
+        "Near and Far",
+        "Open and Closed Shapes"
+      ]
+    },
+    {
+      "number": 2,
+      "name": "Numbers from One to Nine",
+      "slug": "numbers-from-one-to-nine",
+      "topics": [
+        "Counting Objects",
+        "Number Recognition",
+        "Writing Numbers",
+        "Comparing Numbers"
+      ]
+    }
+  ]
+}

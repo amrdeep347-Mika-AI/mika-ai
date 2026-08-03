@@ -1,0 +1,44 @@
+[
+  {
+    "id": "class-1-mathematics",
+    "classId": "class-1",
+    "name": "Mathematics",
+    "slug": "mathematics",
+    "icon": "📐"
+  },
+  {
+    "id": "class-1-english",
+    "classId": "class-1",
+    "name": "English",
+    "slug": "english",
+    "icon": "📖"
+  },
+  {
+    "id": "class-1-hindi",
+    "classId": "class-1",
+    "name": "Hindi",
+    "slug": "hindi",
+    "icon": "📝"
+  },
+  {
+    "id": "class-2-mathematics",
+    "classId": "class-2",
+    "name": "Mathematics",
+    "slug": "mathematics",
+    "icon": "📐"
+  },
+  {
+    "id": "class-2-english",
+    "classId": "class-2",
+    "name": "English",
+    "slug": "english",
+    "icon": "📖"
+  },
+  {
+    "id": "class-2-hindi",
+    "classId": "class-2",
+    "name": "Hindi",
+    "slug": "hindi",
+    "icon": "📝"
+  }
+]
