@@ -164,19 +164,28 @@ async function askMika() {
 
 async function askQuestion(question: string) {
   if (!lesson || !question.trim()) return;
-  const updatedBrain = brain
+ const updatedBrain: ClassroomBrain = brain
   ? {
       ...brain,
       currentStep,
       messages: [
         ...brain.messages,
         {
-          role: "student",
+          role: "student" as const,
           text: question,
         },
       ],
     }
-  : createBrain(lesson.title);
+  : {
+      ...createBrain(lesson.title),
+      currentStep,
+      messages: [
+        {
+          role: "student" as const,
+          text: question,
+        },
+      ],
+    };
 
 setBrain(updatedBrain);
 
