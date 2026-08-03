@@ -339,10 +339,11 @@ async function saveProgress() {
         chapter_id: chapterId,
         topic_id: topicId,
 
-        lesson_title: lesson.title,
+       lesson_title: lesson?.title ?? "",
 
-        score,
-        total_questions: lesson.teachingSteps.length,
+score,
+
+total_questions: lesson?.teachingSteps.length ?? 0,
 
         xp,
         coins,
