@@ -1,5 +1,5 @@
 import { supabaseAdmin } from "@/lib/supabase-admin";
-import math from "@/data/curriculum/class-1/mathematics.json";
+import math from "../../data/curriculum/class-1/mathematics.json";
 
 function slugify(text: string) {
   return text

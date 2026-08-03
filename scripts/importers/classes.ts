@@ -1,5 +1,5 @@
 import { supabaseAdmin } from "@/lib/supabase-admin";
-import classes from "@/data/curriculum/classes.json";
+import classes from "../../data/curriculum/classes.json";
 
 export async function importClasses() {
   console.log("🏫 Importing Classes...");
