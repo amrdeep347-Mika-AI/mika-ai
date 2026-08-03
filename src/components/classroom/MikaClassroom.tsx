@@ -203,7 +203,8 @@ setBrain(updatedBrain);
   chapter: chapterId,
   topic: topicId,
 
-  lessonSpeech: step.speech,
+lessonSpeech:
+  lesson.teachingSteps[currentStep]?.teacherSpeech ?? "",
 
   studentQuestion: question,
 
