@@ -32,7 +32,6 @@ export default function HeroProfessor() {
     repeat: Infinity,
     ease: "easeInOut",
   }}
-        transition={{ duration: 4, repeat: Infinity }}
         className="absolute top-8 -left-16 z-10
         backdrop-blur-xl bg-white/10
         border border-cyan-400/20
@@ -57,7 +56,6 @@ transition={{
   repeat: Infinity,
   ease: "easeInOut",
 }}
-        transition={{ duration: 5, repeat: Infinity }}
         className="absolute top-20 -right-16 z-10
         backdrop-blur-xl bg-white/10
         border border-cyan-400/20
@@ -82,7 +80,6 @@ transition={{
     repeat: Infinity,
     ease: "easeInOut",
   }}
-        transition={{ duration: 6, repeat: Infinity }}
         className="absolute bottom-16 -left-20 z-10
         backdrop-blur-xl bg-white/10
         border border-emerald-400/20
