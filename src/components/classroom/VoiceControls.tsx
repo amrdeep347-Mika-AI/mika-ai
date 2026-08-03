@@ -11,6 +11,7 @@ export default function VoiceControls({ onTranscript }: Props) {
 
   const [supported, setSupported] = useState(true);
   const [listening, setListening] = useState(false);
+  const listeningRef = useRef(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
