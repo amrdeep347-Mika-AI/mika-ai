@@ -1,5 +1,5 @@
 import { supabaseAdmin } from "@/lib/supabase-admin";
-import boards from "@/data/curriculum/boards.json";
+import boards from "../../data/curriculum/boards.json";
 
 export async function importBoards() {
   console.log("📚 Importing Boards...");
