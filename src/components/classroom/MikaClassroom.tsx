@@ -421,7 +421,7 @@ if (!step) {
 
      <div className="lg:col-span-1">
   <MikaAvatar
-    speech={step.speech}
+    speech={step.teacherSpeech}
     isSpeaking={isSpeaking}
     pose={pose}
   />
