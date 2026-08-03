@@ -11,7 +11,7 @@ export const demoLesson: Lesson = {
       boardInstruction:
         "Write the equation 2x + 3 = 11 and solve it step by step.",
 
-      animation: "write",
+      animation: "draw",
 
       question: "What is the value of x?",
 
