@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import MikaClassroom from "./MikaClassroom";
 
-
 interface Topic {
   id: string;
   name: string;
@@ -32,23 +31,23 @@ export default function ClassroomLayout({
 
   const STORAGE_KEY = `${classSlug}-${subjectSlug}-last-topic`;
 
-const [selectedTopic, setSelectedTopic] = useState(() => {
-  if (typeof window !== "undefined") {
-    return (
-      localStorage.getItem(STORAGE_KEY) ||
-      firstTopic?.slug ||
-      ""
-    );
+  const [selectedTopic, setSelectedTopic] = useState(() => {
+    if (typeof window !== "undefined") {
+      return (
+        localStorage.getItem(STORAGE_KEY) ||
+        firstTopic?.slug ||
+        ""
+      );
+    }
 
-    useEffect(() => {
-  if (selectedTopic) {
-    localStorage.setItem(STORAGE_KEY, selectedTopic);
-  }
-}, [selectedTopic, STORAGE_KEY]);
-  }
+    return firstTopic?.slug || "";
+  });
 
-  return firstTopic?.slug || "";
-});
+  useEffect(() => {
+    if (selectedTopic) {
+      localStorage.setItem(STORAGE_KEY, selectedTopic);
+    }
+  }, [selectedTopic, STORAGE_KEY]);
 
   const currentChapter =
     chapters.find((chapter) =>
@@ -59,30 +58,26 @@ const [selectedTopic, setSelectedTopic] = useState(() => {
 
   return (
     <div className="flex h-screen">
-
       <Sidebar
-  chapters={chapters.map((chapter) => ({
-    id: chapter.id,
-    title: chapter.name,
-    topics: chapter.topics,   // <-- NEW
-  }))}
-  selectedTopic={selectedTopic}
-  setSelectedTopic={setSelectedTopic}
-/>
+        chapters={chapters.map((chapter) => ({
+          id: chapter.id,
+          title: chapter.name,
+          topics: chapter.topics,
+        }))}
+        selectedTopic={selectedTopic}
+        setSelectedTopic={setSelectedTopic}
+      />
 
       <div className="flex-1 overflow-auto p-8">
-
-        {selectedTopic && (
+        {selectedTopic && currentChapter && (
           <MikaClassroom
             classId={classSlug}
             subjectId={subjectSlug}
-            chapterId={currentChapter.slug}
+            chapterId={currentChapter.id}
             topicId={selectedTopic}
           />
         )}
-
       </div>
-
     </div>
   );
 }
