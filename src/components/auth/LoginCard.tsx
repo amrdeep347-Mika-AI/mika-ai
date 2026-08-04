@@ -7,7 +7,6 @@ import {
   Lock,
   Eye,
   EyeOff,
-  Chrome,
 } from "lucide-react";
 
 export default function LoginCard() {
