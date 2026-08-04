@@ -3,44 +3,68 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { BrainCircuit } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const [visible, setVisible] = useState(true);
-  const timer = useRef<NodeJS.Timeout | null>(null);
+  const [active, setActive] = useState("hero");
 
-useEffect(() => {
-  let lastScroll = window.scrollY;
+  useEffect(() => {
+    let lastScroll = window.scrollY;
 
-  const handleScroll = () => {
-    const currentScroll = window.scrollY;
+    const handleScroll = () => {
+      const currentScroll = window.scrollY;
 
-    // At the very top → always show
-    if (currentScroll <= 10) {
-      setVisible(true);
+      // Hide / Show Navbar
+      if (currentScroll <= 10) {
+        setVisible(true);
+      } else if (currentScroll > lastScroll) {
+        setVisible(false);
+      } else {
+        setVisible(true);
+      }
+
       lastScroll = currentScroll;
-      return;
-    }
 
-    // Scroll down → hide immediately
-    if (currentScroll > lastScroll) {
-      setVisible(false);
-    }
+      // Active Section
+      const sections = [
+        "hero",
+        "features",
+        "experience",
+        "curriculum",
+        "pricing",
+        "faq",
+      ];
 
-    // Scroll up → show immediately
-    if (currentScroll < lastScroll) {
-      setVisible(true);
-    }
+      for (const id of sections) {
+        const section = document.getElementById(id);
 
-    lastScroll = currentScroll;
-  };
+        if (!section) continue;
 
-  window.addEventListener("scroll", handleScroll);
+        const top = section.offsetTop - 150;
+        const bottom = top + section.offsetHeight;
 
-  return () => {
-    window.removeEventListener("scroll", handleScroll);
-  };
-}, []);
+        if (
+          currentScroll >= top &&
+          currentScroll < bottom
+        ) {
+          setActive(id);
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () =>
+      window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const menu = [
+  { label: "Home", id: "hero" },
+  { label: "Features", id: "features" },
+  { label: "Dashboard", id: "dashboard" },
+  { label: "Contact", id: "footer" },
+];
 
   return (
     <motion.nav
@@ -59,14 +83,18 @@ useEffect(() => {
 
         {/* Logo */}
 
-        <div className="flex items-center gap-3">
-
+        <Link
+          href="/"
+          className="flex items-center gap-3"
+        >
           <div className="w-12 h-12 rounded-full bg-gradient-to-r from-cyan-400 to-blue-600 flex items-center justify-center shadow-lg">
-            <BrainCircuit className="text-white" size={24} />
+            <BrainCircuit
+              className="text-white"
+              size={24}
+            />
           </div>
 
           <div>
-
             <h1 className="text-white font-bold text-xl">
               Mika AI
             </h1>
@@ -74,43 +102,60 @@ useEffect(() => {
             <p className="text-xs text-cyan-200">
               Your Personal AI Teacher
             </p>
-
           </div>
+        </Link>
 
-        </div>
+        {/* Desktop Menu */}
 
-        {/* Menu */}
+        <div className="hidden lg:flex items-center gap-10">
 
-        <div className="hidden lg:flex items-center gap-10 text-white">
-
-          <Link href="/">Home</Link>
-
-          <Link href="/classes">
-            Classes
-          </Link>
-
-          <Link href="#">
-            Features
-          </Link>
-
-          <Link href="#">
-            About
-          </Link>
+          {menu.map((item) => (
+            <a
+              key={item.id}
+              href={`#${item.id}`}
+              className={`transition-all duration-300 font-medium ${
+                active === item.id
+                  ? "text-cyan-300"
+                  : "text-white hover:text-cyan-300"
+              }`}
+            >
+              {item.label}
+            </a>
+          ))}
 
         </div>
 
         {/* Button */}
 
-        <motion.button
-          whileHover={{
-            scale: 1.05,
-            boxShadow: "0 0 25px rgba(0,212,255,.6)",
-          }}
-          whileTap={{ scale: 0.95 }}
-          className="px-6 py-3 rounded-full bg-gradient-to-r from-cyan-400 to-blue-600 text-white font-semibold"
-        >
-          Start Learning
-        </motion.button>
+        <div className="flex items-center gap-4">
+
+  <Link href="/login">
+    <motion.button
+      whileHover={{
+        scale: 1.05,
+        boxShadow: "0 0 25px rgba(0,212,255,.6)",
+      }}
+      whileTap={{ scale: 0.95 }}
+      className="px-6 py-3 rounded-full bg-gradient-to-r from-cyan-400 to-blue-600 text-white font-semibold"
+    >
+      Login/Sign up
+    </motion.button>
+  </Link>
+
+  <Link href="/login">
+    <motion.button
+      whileHover={{
+        scale: 1.05,
+        boxShadow: "0 0 25px rgba(0,212,255,.6)",
+      }}
+      whileTap={{ scale: 0.95 }}
+      className="px-6 py-3 rounded-full bg-gradient-to-r from-cyan-400 to-blue-600 text-white font-semibold"
+    >
+      Start Learning
+    </motion.button>
+  </Link>
+
+</div>
 
       </div>
     </motion.nav>

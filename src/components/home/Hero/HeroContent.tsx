@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 
@@ -51,7 +52,7 @@ export default function HeroContent() {
   interactive conversations.
 </p>
   <div className="mt-12 flex flex-wrap gap-5">
-
+    <Link href="/login">
   <button className="group relative overflow-hidden rounded-2xl bg-gradient-to-r from-cyan-400 via-sky-500 to-blue-600 px-8 py-4 font-bold text-white shadow-[0_0_50px_rgba(0,180,255,.35)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_70px_rgba(0,220,255,.6)]">
     <span className="relative z-10 flex items-center gap-2">
       🚀 Start Learning
@@ -59,6 +60,7 @@ export default function HeroContent() {
 
     <div className="absolute inset-0 -translate-x-full bg-white/20 transition-transform duration-700 group-hover:translate-x-full" />
   </button>
+</Link>
 
   <button className="rounded-2xl border border-cyan-400/30 bg-white/5 px-8 py-4 font-semibold text-cyan-300 backdrop-blur-xl transition-all duration-300 hover:border-cyan-300 hover:bg-cyan-500/10 hover:text-white">
     ▶ Watch Demo

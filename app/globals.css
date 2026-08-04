@@ -92,3 +92,151 @@ button {
 .animate-breathe{
   animation:breathe 3s ease-in-out infinite;
 }
+
+/* =======================================================
+   MIKA AI PREMIUM GLOBAL STYLES
+======================================================= */
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, rgba(34,211,238,.12), transparent 40%),
+    linear-gradient(
+      to bottom,
+      #020617 0%,
+      #07142d 35%,
+      #0b1f3b 70%,
+      #0f172a 100%
+    );
+
+  color: white;
+}
+
+/* Premium Glass */
+
+.glass {
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+
+  background: rgba(255,255,255,.08);
+
+  border: 1px solid rgba(255,255,255,.12);
+}
+
+/* Glow */
+
+.glow-blue {
+  box-shadow:
+    0 0 30px rgba(59,130,246,.35),
+    0 0 80px rgba(59,130,246,.12);
+}
+
+.glow-cyan {
+  box-shadow:
+    0 0 30px rgba(34,211,238,.45),
+    0 0 80px rgba(34,211,238,.12);
+}
+
+/* Buttons */
+
+.btn-primary{
+  background:linear-gradient(
+      90deg,
+      #06b6d4,
+      #2563eb
+  );
+
+  transition:.35s;
+}
+
+.btn-primary:hover{
+
+  transform:translateY(-2px);
+
+  box-shadow:
+  0 15px 40px rgba(34,211,238,.35);
+
+}
+
+/* Cards */
+
+.card-hover{
+
+transition:.35s;
+
+}
+
+.card-hover:hover{
+
+transform:translateY(-8px);
+
+box-shadow:
+0 25px 60px rgba(0,0,0,.25);
+
+}
+
+/* Smooth */
+
+*{
+scroll-behavior:smooth;
+}
+
+/* Animations */
+
+@keyframes floatSlow{
+
+0%{
+transform:translateY(0px);
+}
+
+50%{
+transform:translateY(-10px);
+}
+
+100%{
+transform:translateY(0px);
+}
+
+}
+
+.animate-float{
+
+animation:floatSlow 5s ease-in-out infinite;
+
+}
+
+@keyframes pulseGlow{
+
+0%{
+
+box-shadow:
+0 0 0 rgba(34,211,238,.2);
+
+}
+
+50%{
+
+box-shadow:
+0 0 35px rgba(34,211,238,.4);
+
+}
+
+100%{
+
+box-shadow:
+0 0 0 rgba(34,211,238,.2);
+
+}
+
+}
+
+.animate-glow{
+
+animation:pulseGlow 3s infinite;
+
+}
